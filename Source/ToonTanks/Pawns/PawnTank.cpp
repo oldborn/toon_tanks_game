@@ -34,14 +34,30 @@ void APawnTank::Rotate()
     AddActorLocalRotation(RotationDirection, true);
 }
 
+void APawnTank::LookAtCursor()
+{
+    if(PlayerController)
+    {
+        FHitResult HitResult;
+        if(PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult))
+        {
+            LookAt(HitResult.ImpactPoint);
+        }
+    }
+}
 
 
 // Called when the game starts or when spawned
 void APawnTank::BeginPlay()
 {
     Super::BeginPlay();
-    Rotate();
-	Move();
+    PlayerController = Cast<APlayerController>(GetController());
+}
+
+void APawnTank::Die()
+{
+    Super::Die();
+    Destroy();
 }
 
 // Called every frame
@@ -50,6 +66,12 @@ void APawnTank::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
     Move();
     Rotate();
+    LookAtCursor();
+}
+
+void APawnTank::Fire()
+{
+    Super::Fire();
 }
 
 // Called to bind functionality to input
@@ -58,4 +80,5 @@ void APawnTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
     Super::SetupPlayerInputComponent(PlayerInputComponent);
     PlayerInputComponent->BindAxis("MoveForward",this, &APawnTank::CalculateMoveInput);
     PlayerInputComponent->BindAxis("Turn",this, &APawnTank::CalculateRotateInput);
+    PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APawnTank::Fire);
 }

@@ -23,4 +23,29 @@ ABasePawn::ABasePawn()
 	
 }
 
+void ABasePawn::LookAt(FVector LookAtThat)
+{
+	FRotator TurretRotation =
+		FVector(FVector(LookAtThat.X, LookAtThat.Y, TurretMesh->GetComponentLocation().Z) - TurretMesh->GetComponentLocation()).Rotation();
+	TurretMesh->SetWorldRotation(TurretRotation);
+	
+}
+
+void ABasePawn::Fire()
+{
+	UE_LOG(LogTemp, Display, TEXT("The Pawn [%s] used ABasePawn::Fire !"), *GetOwner()->GetName());
+	if(ProjectileClass)
+	{
+		FVector SpawnVector = ProjectileSpawnPoint->GetComponentLocation();
+		FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
+		AProjectileBase* TempProjectile = GetWorld()->SpawnActor<AProjectileBase>(ProjectileClass, SpawnVector, SpawnRotation);
+		TempProjectile->SetOwner(this);
+	}
+}
+
+void ABasePawn::Die()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Actor [%s] died"), *GetOwner()->GetName());
+}
+
 
