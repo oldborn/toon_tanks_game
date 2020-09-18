@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "Pawns/PawnTank.h"
+#include "ToonTanks/Pawns/PawnTank.h"
+#include "ToonTanks/PlayerControllers/PlayerControllerBase.h"
+
 
 #include "ToonTanksGameMode.generated.h"
 
@@ -19,6 +21,7 @@ class TOONTANKS_API AToonTanksGameMode : public AGameModeBase
 private:
 	APawnTank* PlayerTank = nullptr;
 	int32 TargetTurrets = 0;
+	APlayerControllerBase* PlayerController = nullptr;
 	
 	void HandleGameStart();
 	void HandleGameOver(bool PlayerWon);

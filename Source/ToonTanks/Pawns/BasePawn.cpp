@@ -3,6 +3,9 @@
 
 #include "BasePawn.h"
 
+#include "Kismet/GameplayStatics.h"
+#include "ToonTanks/Components/HealthComponent.h"
+
 // Sets default values
 ABasePawn::ABasePawn()
 {
@@ -20,6 +23,8 @@ ABasePawn::ABasePawn()
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 	
 }
 
@@ -46,6 +51,10 @@ void ABasePawn::Fire()
 void ABasePawn::Die()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Actor [%s] died"), *GetOwner()->GetName());
+	const FVector ActorLocation = GetActorLocation();
+	UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticle, ActorLocation);
+	UGameplayStatics::PlaySoundAtLocation(this,DieSound,ActorLocation);
+	GetWorld()->GetFirstPlayerController()->ClientPlayCameraShake(DieShake);
 }
 
 

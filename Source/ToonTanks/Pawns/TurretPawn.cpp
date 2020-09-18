@@ -25,7 +25,7 @@ void ATurretPawn::CheckFireCondition()
     // then
     //     if player in range
     //        fire!
-    if(PlayerPawn && DistanceBetweenPlayerPawn() < Range)
+    if(PlayerPawn && PlayerPawn->GetIsPlayerAlive() && DistanceBetweenPlayerPawn() < Range)
     {
         UE_LOG(LogTemp, Warning, TEXT("Fire!!"));
         Fire();
@@ -40,7 +40,7 @@ ATurretPawn::ATurretPawn()
 void ATurretPawn::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-    if(PlayerPawn) LookAt(PlayerPawn->GetActorLocation());
+    if(PlayerPawn && PlayerPawn->GetIsPlayerAlive()) LookAt(PlayerPawn->GetActorLocation());
 }
 
 void ATurretPawn::BeginPlay()
@@ -55,5 +55,5 @@ void ATurretPawn::Die()
 {
     Super::Die();
     UE_LOG(LogTemp, Warning, TEXT("Turret [%s] died"), *GetOwner()->GetName());
-    GetOwner()->Destroy();
+    Destroy();
 }

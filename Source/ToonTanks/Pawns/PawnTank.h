@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
 #include "BasePawn.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -34,6 +33,7 @@ private:
 	float RotateSpeed = 300.0f;
 
 	APlayerController* PlayerController = nullptr;
+	bool bIsPlayerAlive = true;
 	
 	void CalculateMoveInput(float Value);
 	void CalculateRotateInput(float Value);
@@ -50,6 +50,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Die() override;
+	bool GetIsPlayerAlive() const;
 
 protected:
 	// Called when the game starts or when spawned

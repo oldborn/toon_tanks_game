@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ToonTanks/ToonTanksGameMode.h"
+#include "ToonTanks/GameModes/ToonTanksGameMode.h"
 
 #include "HealthComponent.generated.h"
 
@@ -18,7 +18,7 @@ private:
 	float DefaultHealth = 100.0f;
 	float Health = 0.0f;
 
-	AToonTanksGameMode* GameMode = nullptr;
+	AToonTanksGameMode* GameMode;
 	
 public:	
 	// Sets default values for this actor's properties

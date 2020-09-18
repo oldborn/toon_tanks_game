@@ -2,7 +2,7 @@
 
 
 #include "HealthComponent.h"
-#include "ToonTanks/ToonTanksGameMode.h"
+#include "ToonTanks/GameModes/ToonTanksGameMode.h"
 #include "Kismet/GameplayStatics.h"
 // Sets default values
 UHealthComponent::UHealthComponent()
